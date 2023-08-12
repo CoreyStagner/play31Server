@@ -32,9 +32,9 @@ export const getGame: RequestHandler = async (req, res, next) => {
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    // if (!game.commissioner.equals(authenticatedUser)) {
-    //   throw createHttpError(401, "You are unable to access this note.");
-    // }
+    if (!game.commissioner.equals(authenticatedUser)) {
+      throw createHttpError(401, "You are unable to access this note.");
+    }
 
     res.status(200).json(game);
   } catch (error) {
@@ -119,9 +119,9 @@ export const updateGame: RequestHandler<
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    // if (!game.commissioner.equals(authenticatedUser)) {
-    //   throw createHttpError(401, "You are unable to access this note.");
-    // }
+    if (!game.commissioner.equals(authenticatedUser)) {
+      throw createHttpError(401, "You are unable to access this note.");
+    }
 
     game.title = updatedTitle;
     game.location = updatedLocation;
@@ -165,9 +165,9 @@ export const deleteGame: RequestHandler<
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    // if (!game.commissioner.equals(authenticatedUser)) {
-    //   throw createHttpError(401, "You are unable to access this note.");
-    // }
+    if (!game.commissioner.equals(authenticatedUser)) {
+      throw createHttpError(401, "You are unable to access this note.");
+    }
     
     await GameModel.findByIdAndDelete(gameId);
 
