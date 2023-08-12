@@ -16,8 +16,23 @@ exports.getRoot = void 0;
 const game_1 = __importDefault(require("../models/game"));
 const getRoot = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const response = {
+            games: null,
+            // locations: null,
+            // commissioners: null,
+        };
         const games = yield game_1.default.find().exec();
-        res.status(200).json(games);
+        if (!games) {
+            response.games = null;
+        }
+        else {
+            response.games = games;
+        }
+        // const locations = await GameModel.find().exec();
+        // response.locations = locations;
+        // const commissioners = await GameModel.find().exec();
+        // response.commissioners = commissioners;
+        res.status(200).json(response);
     }
     catch (error) {
         next(error);
