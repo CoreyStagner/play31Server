@@ -30,9 +30,12 @@ const getGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getGames = getGames;
 const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('here');
     const { gameId } = req.params;
+    console.log("Game ID:", gameId);
     const authenticatedUser = req.session.userId;
     try {
+        console.log('there');
         (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
         if (!mongoose_1.default.isValidObjectId(gameId)) {
             throw (0, http_errors_1.default)(400, `An invalid game ID was provided: ${gameId}`);
@@ -41,9 +44,9 @@ const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         res.status(200).json(game);
     }
     catch (error) {
@@ -87,9 +90,9 @@ const updateGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         game.title = updatedTitle;
         game.location = updatedLocation;
         const updatedGame = yield game.save();
@@ -112,9 +115,9 @@ const deleteGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         yield game_1.default.findByIdAndDelete(gameId);
         res.sendStatus(204);
     }

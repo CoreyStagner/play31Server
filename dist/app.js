@@ -31,11 +31,11 @@ const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const games_1 = __importDefault(require("./routes/games"));
 const users_1 = __importDefault(require("./routes/users"));
-const default_1 = __importDefault(require("./routes/default"));
 const morgan_1 = __importDefault(require("morgan"));
 const http_errors_1 = __importStar(require("http-errors"));
 const validateEnv_1 = __importDefault(require("./util/validateEnv"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
+// import { requiresAuth } from "./middleware/auth";
 // Set up Express Server
 const app = (0, express_1.default)();
 // Set up Logger
@@ -58,7 +58,7 @@ app.use((0, express_session_1.default)({
 // Routes
 app.use("/api/users", users_1.default);
 app.use("/api/games", games_1.default);
-app.get("/", default_1.default);
+// app.get("/", defaultRouter);
 // Default Catch All
 app.use((req, res, next) => {
     console.log(req.path);

@@ -8,7 +8,7 @@ import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
-import { requiresAuth } from "./middleware/auth";
+// import { requiresAuth } from "./middleware/auth";
 
 // Set up Express Server
 const app = express();
@@ -33,7 +33,7 @@ app.use(session({
 // Routes
 app.use("/api/users", usersRouter);
 app.use("/api/games",  gamesRouter);
-app.get("/", defaultRouter);
+// app.get("/", defaultRouter);
 
 // Default Catch All
 app.use((req, res, next) => {
