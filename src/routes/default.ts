@@ -1,8 +1,8 @@
 import express from "express";
-import * as GamesController from "../controllers/games";
+import * as DefaultController from "../controllers/default";
 
 const router = express.Router();
 
-router.get("/", []);
+router.get("/", DefaultController.getRoot);
 
 export default router;

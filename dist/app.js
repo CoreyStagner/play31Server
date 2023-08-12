@@ -31,6 +31,7 @@ const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const games_1 = __importDefault(require("./routes/games"));
 const users_1 = __importDefault(require("./routes/users"));
+const default_1 = __importDefault(require("./routes/default"));
 const morgan_1 = __importDefault(require("morgan"));
 const http_errors_1 = __importStar(require("http-errors"));
 const validateEnv_1 = __importDefault(require("./util/validateEnv"));
@@ -57,9 +58,12 @@ app.use((0, express_session_1.default)({
 // Routes
 app.use("/api/users", users_1.default);
 app.use("/api/games", games_1.default);
+app.use("/", default_1.default);
 // Default Catch All
 app.use((req, res, next) => {
-    next((0, http_errors_1.default)(404, "Endpoint not found"));
+    console.log(req.path);
+    // console.log(res)
+    next((0, http_errors_1.default)(404, `Endpoint not found`));
 });
 // Error Handler
 app.use(
