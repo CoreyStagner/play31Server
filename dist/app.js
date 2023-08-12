@@ -58,7 +58,7 @@ app.use((0, express_session_1.default)({
 // Routes
 app.use("/api/users", users_1.default);
 app.use("/api/games", games_1.default);
-app.use("/", default_1.default);
+app.get("/", default_1.default);
 // Default Catch All
 app.use((req, res, next) => {
     console.log(req.path);

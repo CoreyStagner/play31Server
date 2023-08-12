@@ -33,7 +33,7 @@ app.use(session({
 // Routes
 app.use("/api/users", usersRouter);
 app.use("/api/games",  gamesRouter);
-app.use("/", defaultRouter);
+app.get("/", defaultRouter);
 
 // Default Catch All
 app.use((req, res, next) => {

@@ -21,7 +21,8 @@
     "express-session": "^1.17.3",
     "http-errors": "^2.0.0",
     "mongoose": "^7.4.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "save": "^2.9.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
