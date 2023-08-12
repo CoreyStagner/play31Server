@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRoot = void 0;
 const game_1 = __importDefault(require("../models/game"));
+// import { Schema } from "mongoose";
 const getRoot = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = {

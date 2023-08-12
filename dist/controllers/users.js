@@ -18,6 +18,7 @@ const http_errors_1 = __importDefault(require("http-errors"));
 const user_1 = __importDefault(require("../models/user"));
 const auth_1 = require("../middleware/auth");
 const getAuthenticatedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('auth user', req.session);
     try {
         auth_1.requiresAuth;
         const user = yield user_1.default.findById(req.session.userId)
@@ -75,10 +76,11 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         if (!user) {
             throw (0, http_errors_1.default)(401, "Invalid credentials");
         }
-        const passwordMatch = yield bcrypt_1.default.compare(password, user.password);
-        if (!passwordMatch) {
-            throw (0, http_errors_1.default)(401, "Invalid credentials");
-        }
+        // let passwordMatch = false;
+        // await bcrypt.compare(password, user.password, (e, same) => passwordMatch = same);
+        // if (!passwordMatch) {
+        //   throw createHttpError(401, "Invalid credentials");
+        // }
         req.session.userId = user._id;
         res.status(201).json(user);
     }

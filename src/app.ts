@@ -3,8 +3,9 @@ import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import gamesRouter from "./routes/games";
 import usersRouter from "./routes/users";
-import defaultRouter from "./routes/default";
+// import defaultRouter from "./routes/default";
 import morgan from "morgan";
+import cors from "cors"
 import createHttpError, { isHttpError } from "http-errors";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
@@ -12,6 +13,13 @@ import MongoStore from "connect-mongo";
 
 // Set up Express Server
 const app = express();
+// Configure CORS for all methods and origins. TODO: have this changed to just from the app.
+const corsOptions = {
+  origin: '*',
+  methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+app.use(cors(corsOptions));
 // Set up Logger
 app.use(morgan("dev"));
 // Use JSON Payloads

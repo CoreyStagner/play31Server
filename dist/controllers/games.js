@@ -16,11 +16,11 @@ exports.deleteGame = exports.updateGame = exports.createGame = exports.getGame =
 const game_1 = __importDefault(require("../models/game"));
 const http_errors_1 = __importDefault(require("http-errors"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const assertIsDefined_1 = require("../util/assertIsDefined");
+// import { assertIsDefined } from "../util/assertIsDefined";
 const getGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const authenticatedUser = req.session.userId;
+    // const authenticatedUser = req.session.userId;
     try {
-        (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
+        // assertIsDefined(authenticatedUser);
         const games = yield game_1.default.find().exec();
         res.status(200).json(games);
     }
@@ -33,10 +33,10 @@ const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     console.log('here');
     const { gameId } = req.params;
     console.log("Game ID:", gameId);
-    const authenticatedUser = req.session.userId;
+    // const authenticatedUser = req.session.userId;
     try {
         console.log('there');
-        (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
+        // assertIsDefined(authenticatedUser);
         if (!mongoose_1.default.isValidObjectId(gameId)) {
             throw (0, http_errors_1.default)(400, `An invalid game ID was provided: ${gameId}`);
         }
@@ -44,9 +44,9 @@ const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         res.status(200).json(game);
     }
     catch (error) {
@@ -56,16 +56,16 @@ const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.getGame = getGame;
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, location } = req.body;
-    const authenticatedUser = req.session.userId;
+    // const authenticatedUser = req.session.userId;
     try {
-        (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
+        // assertIsDefined(authenticatedUser);
         if (!title) {
             throw (0, http_errors_1.default)(400, `Bad Request: title is missing from the payload ${JSON.stringify(req.body, null, 2)}`);
         }
         const newGame = yield game_1.default.create({
             title,
             location,
-            commissioner: authenticatedUser,
+            // commissioner: authenticatedUser,
         });
         res.status(201).json(newGame);
     }
@@ -77,9 +77,9 @@ exports.createGame = createGame;
 const updateGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { gameId } = req.params;
     const { title: updatedTitle, location: updatedLocation } = req.body;
-    const authenticatedUser = req.session.userId;
+    // const authenticatedUser = req.session.userId;
     try {
-        (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
+        // assertIsDefined(authenticatedUser);
         if (!updatedTitle || !updatedLocation) {
             throw (0, http_errors_1.default)(400, `Payload does not contain the needed changes, requires { title: string, location: string }: ${JSON.stringify(req.body, null, 2)}`);
         }
@@ -90,9 +90,9 @@ const updateGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         game.title = updatedTitle;
         game.location = updatedLocation;
         const updatedGame = yield game.save();
@@ -105,9 +105,9 @@ const updateGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.updateGame = updateGame;
 const deleteGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { gameId } = req.params;
-    const authenticatedUser = req.session.userId;
+    //  const authenticatedUser = req.session.userId;
     try {
-        (0, assertIsDefined_1.assertIsDefined)(authenticatedUser);
+        // assertIsDefined(authenticatedUser);
         if (!mongoose_1.default.isValidObjectId(gameId)) {
             throw (0, http_errors_1.default)(400, `An invalid game ID was provided: ${gameId}`);
         }
@@ -115,9 +115,9 @@ const deleteGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!game) {
             throw (0, http_errors_1.default)(404, `Game was not found: ${gameId}`);
         }
-        if (!game.commissioner.equals(authenticatedUser)) {
-            throw (0, http_errors_1.default)(401, "You are unable to access this note.");
-        }
+        // if (!game.commissioner.equals(authenticatedUser)) {
+        //   throw createHttpError(401, "You are unable to access this note.");
+        // }
         yield game_1.default.findByIdAndDelete(gameId);
         res.sendStatus(204);
     }

@@ -4,7 +4,7 @@ import { InferSchemaType, model, Schema } from "mongoose";
 const gameSchema = new Schema({
     title: { type: String, required: true },
     location: { type: String },
-    commissioner: { type: Schema.Types.ObjectId, required: true}
+    // commissioner: { type: Schema.Types.ObjectId, required: true}
 }, {
     timestamps: true
 });

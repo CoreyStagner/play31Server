@@ -31,13 +31,22 @@ const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const games_1 = __importDefault(require("./routes/games"));
 const users_1 = __importDefault(require("./routes/users"));
+// import defaultRouter from "./routes/default";
 const morgan_1 = __importDefault(require("morgan"));
+const cors_1 = __importDefault(require("cors"));
 const http_errors_1 = __importStar(require("http-errors"));
 const validateEnv_1 = __importDefault(require("./util/validateEnv"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
 // import { requiresAuth } from "./middleware/auth";
 // Set up Express Server
 const app = (0, express_1.default)();
+// Configure CORS for all methods and origins. TODO: have this changed to just from the app.
+const corsOptions = {
+    origin: '*',
+    methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use((0, cors_1.default)(corsOptions));
 // Set up Logger
 app.use((0, morgan_1.default)("dev"));
 // Use JSON Payloads

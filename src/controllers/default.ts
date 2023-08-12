@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import GameModel from "../models/game";
-import { Schema } from "mongoose";
+// import { Schema } from "mongoose";
 
 export const getRoot: RequestHandler = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ export const getRoot: RequestHandler = async (req, res, next) => {
       games: Array<{
         title: string;
         locations?: string | null;
-        commissioners?: Schema.Types.ObjectId;
+        // commissioners?: Schema.Types.ObjectId;
       }> | null;
     }
     const response: Iresponse = {

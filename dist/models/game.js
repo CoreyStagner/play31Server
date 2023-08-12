@@ -5,7 +5,7 @@ const mongoose_1 = require("mongoose");
 const gameSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     location: { type: String },
-    commissioner: { type: mongoose_1.Schema.Types.ObjectId, required: true }
+    // commissioner: { type: Schema.Types.ObjectId, required: true}
 }, {
     timestamps: true
 });

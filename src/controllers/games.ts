@@ -2,12 +2,12 @@ import { RequestHandler } from "express";
 import GameModel from "../models/game";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
-import { assertIsDefined } from "../util/assertIsDefined";
+// import { assertIsDefined } from "../util/assertIsDefined";
 
 export const getGames: RequestHandler = async (req, res, next) => {
-  const authenticatedUser = req.session.userId;
+  // const authenticatedUser = req.session.userId;
   try {
-    assertIsDefined(authenticatedUser);
+    // assertIsDefined(authenticatedUser);
     const games = await GameModel.find().exec();
     res.status(200).json(games);
   } catch (error) {
@@ -19,10 +19,10 @@ export const getGame: RequestHandler = async (req, res, next) => {
   console.log('here')
   const { gameId } = req.params;
   console.log("Game ID:", gameId);
-  const authenticatedUser = req.session.userId;
+  // const authenticatedUser = req.session.userId;
   try {
     console.log('there');
-    assertIsDefined(authenticatedUser);
+    // assertIsDefined(authenticatedUser);
     if (!mongoose.isValidObjectId(gameId)) {
       throw createHttpError(400, `An invalid game ID was provided: ${gameId}`);
     }
@@ -32,9 +32,9 @@ export const getGame: RequestHandler = async (req, res, next) => {
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    if (!game.commissioner.equals(authenticatedUser)) {
-      throw createHttpError(401, "You are unable to access this note.");
-    }
+    // if (!game.commissioner.equals(authenticatedUser)) {
+    //   throw createHttpError(401, "You are unable to access this note.");
+    // }
 
     res.status(200).json(game);
   } catch (error) {
@@ -54,9 +54,9 @@ export const createGame: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const { title, location } = req.body;
-  const authenticatedUser = req.session.userId;
+  // const authenticatedUser = req.session.userId;
   try {
-    assertIsDefined(authenticatedUser);
+    // assertIsDefined(authenticatedUser);
     if (!title) {
       throw createHttpError(
         400,
@@ -71,7 +71,7 @@ export const createGame: RequestHandler<
     const newGame = await GameModel.create({
       title,
       location,
-      commissioner: authenticatedUser,
+      // commissioner: authenticatedUser,
     });
     res.status(201).json(newGame);
   } catch (error) {
@@ -96,10 +96,10 @@ export const updateGame: RequestHandler<
 > = async (req, res, next) => {
   const { gameId } = req.params;
   const { title: updatedTitle, location: updatedLocation } = req.body;
-  const authenticatedUser = req.session.userId;
+  // const authenticatedUser = req.session.userId;
   
   try {
-    assertIsDefined(authenticatedUser);
+    // assertIsDefined(authenticatedUser);
     if (!updatedTitle || !updatedLocation) {
       throw createHttpError(
         400,
@@ -119,9 +119,9 @@ export const updateGame: RequestHandler<
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    if (!game.commissioner.equals(authenticatedUser)) {
-      throw createHttpError(401, "You are unable to access this note.");
-    }
+    // if (!game.commissioner.equals(authenticatedUser)) {
+    //   throw createHttpError(401, "You are unable to access this note.");
+    // }
 
     game.title = updatedTitle;
     game.location = updatedLocation;
@@ -151,10 +151,10 @@ export const deleteGame: RequestHandler<
 > = async (req, res, next) => {
   const { gameId } = req.params;
 
-   const authenticatedUser = req.session.userId;
+  //  const authenticatedUser = req.session.userId;
   
   try {
-    assertIsDefined(authenticatedUser);
+    // assertIsDefined(authenticatedUser);
     if (!mongoose.isValidObjectId(gameId)) {
       throw createHttpError(400, `An invalid game ID was provided: ${gameId}`);
     }
@@ -165,9 +165,9 @@ export const deleteGame: RequestHandler<
       throw createHttpError(404, `Game was not found: ${gameId}`);
     }
 
-    if (!game.commissioner.equals(authenticatedUser)) {
-      throw createHttpError(401, "You are unable to access this note.");
-    }
+    // if (!game.commissioner.equals(authenticatedUser)) {
+    //   throw createHttpError(401, "You are unable to access this note.");
+    // }
     
     await GameModel.findByIdAndDelete(gameId);
 

@@ -5,7 +5,7 @@ import UserModel from "../models/user";
 import { requiresAuth } from "../middleware/auth";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
-
+  console.log('auth user', req.session)
   try {
     requiresAuth;
     const user = await UserModel.findById(req.session.userId)
@@ -97,11 +97,12 @@ export const login: RequestHandler<
       throw createHttpError(401, "Invalid credentials");
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // let passwordMatch = false;
+    // await bcrypt.compare(password, user.password, (e, same) => passwordMatch = same);
 
-    if (!passwordMatch) {
-      throw createHttpError(401, "Invalid credentials");
-    }
+    // if (!passwordMatch) {
+    //   throw createHttpError(401, "Invalid credentials");
+    // }
 
     req.session.userId = user._id;
     res.status(201).json(user);
