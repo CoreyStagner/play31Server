@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import session from "express-session";
 import gamesRouter from "./routes/games";
 import usersRouter from "./routes/users";
-// import defaultRouter from "./routes/default";
+import defaultRouter from "./routes/default";
 import morgan from "morgan";
 import cors from "cors"
 import createHttpError, { isHttpError } from "http-errors";
@@ -39,14 +39,13 @@ app.use(session({
 }));
 
 // Routes
+// TODO: move to a router.ts file
 app.use("/api/users", usersRouter);
 app.use("/api/games",  gamesRouter);
-// app.get("/", defaultRouter);
+app.use("/api", defaultRouter);
 
 // Default Catch All
 app.use((req, res, next) => {
-  console.log(req.path)
-  // console.log(res)
   next(createHttpError(404, `Endpoint not found`));
 });
 

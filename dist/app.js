@@ -31,7 +31,7 @@ const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const games_1 = __importDefault(require("./routes/games"));
 const users_1 = __importDefault(require("./routes/users"));
-// import defaultRouter from "./routes/default";
+const default_1 = __importDefault(require("./routes/default"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const http_errors_1 = __importStar(require("http-errors"));
@@ -65,13 +65,12 @@ app.use((0, express_session_1.default)({
     }),
 }));
 // Routes
+// TODO: move to a router.ts file
 app.use("/api/users", users_1.default);
 app.use("/api/games", games_1.default);
-// app.get("/", defaultRouter);
+app.use("/api", default_1.default);
 // Default Catch All
 app.use((req, res, next) => {
-    console.log(req.path);
-    // console.log(res)
     next((0, http_errors_1.default)(404, `Endpoint not found`));
 });
 // Error Handler

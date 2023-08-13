@@ -33,7 +33,7 @@ const getAuthenticatedUser = (req, res, next) => __awaiter(void 0, void 0, void 
 exports.getAuthenticatedUser = getAuthenticatedUser;
 const getUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield user_1.default.find().select("+email").exec();
+        const users = yield user_1.default.find().select("+email +firstName +lastName").exec();
         res.status(200).json(users);
     }
     catch (error) {
@@ -42,7 +42,7 @@ const getUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getUsers = getUsers;
 const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, email, password: passwordRaw } = req.body;
+    const { username, email, password: passwordRaw, firstName, lastName } = req.body;
     try {
         if (!username || !email || !passwordRaw) {
             throw (0, http_errors_1.default)(400, "Parameters are missing");
@@ -64,6 +64,8 @@ const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         const newUser = yield user_1.default.create({
             username,
             email,
+            firstName,
+            lastName,
             password: passwordHashed,
         });
         req.session.userId = newUser._id;

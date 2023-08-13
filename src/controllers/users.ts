@@ -19,7 +19,7 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
 
 export const getUsers: RequestHandler = async (req, res, next) => {
   try {
-    const users = await UserModel.find().select("+email").exec();
+    const users = await UserModel.find().select("+email +firstName +lastName").exec();
     res.status(200).json(users);
   } catch (error) {
     next(error);
@@ -28,6 +28,8 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 
 interface SignUpBody {
   username?: string;
+  firstName: string;
+  lastName: string;
   email?: string;
   password?: string;
 }
@@ -38,7 +40,7 @@ export const signUp: RequestHandler<
   SignUpBody,
   unknown
 > = async (req, res, next) => {
-  const { username, email, password: passwordRaw } = req.body;
+  const { username, email, password: passwordRaw, firstName, lastName } = req.body;
 
   try {
     if (!username || !email || !passwordRaw) {
@@ -70,6 +72,8 @@ export const signUp: RequestHandler<
     const newUser = await UserModel.create({
       username,
       email,
+      firstName,
+      lastName,
       password: passwordHashed,
     });
 
