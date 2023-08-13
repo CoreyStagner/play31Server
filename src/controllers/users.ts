@@ -17,6 +17,15 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   }
 };
 
+export const getUsers: RequestHandler = async (req, res, next) => {
+  try {
+    const users = await UserModel.find().select("+email").exec();
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+}
+
 interface SignUpBody {
   username?: string;
   email?: string;

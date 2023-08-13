@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.login = exports.signUp = exports.getAuthenticatedUser = void 0;
+exports.logout = exports.login = exports.signUp = exports.getUsers = exports.getAuthenticatedUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const http_errors_1 = __importDefault(require("http-errors"));
 const user_1 = __importDefault(require("../models/user"));
@@ -31,6 +31,16 @@ const getAuthenticatedUser = (req, res, next) => __awaiter(void 0, void 0, void 
     }
 });
 exports.getAuthenticatedUser = getAuthenticatedUser;
+const getUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield user_1.default.find().select("+email").exec();
+        res.status(200).json(users);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.getUsers = getUsers;
 const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password: passwordRaw } = req.body;
     try {

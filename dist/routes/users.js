@@ -32,6 +32,7 @@ const auth_1 = require("../middleware/auth");
 const router = express_1.default.Router();
 // Get details about the currently authenticated user.
 router.get("/", auth_1.requiresAuth, UserController.getAuthenticatedUser);
+router.get("/retrieve", UserController.getUsers);
 router.post("/signup", UserController.signUp);
 router.post("/login", UserController.login);
 router.post("/logout", UserController.logout);
