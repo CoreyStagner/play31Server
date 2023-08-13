@@ -16,12 +16,9 @@ export const getGames: RequestHandler = async (req, res, next) => {
 };
 
 export const getGame: RequestHandler = async (req, res, next) => {
-  console.log('here')
   const { gameId } = req.params;
-  console.log("Game ID:", gameId);
   // const authenticatedUser = req.session.userId;
   try {
-    console.log('there');
     // assertIsDefined(authenticatedUser);
     if (!mongoose.isValidObjectId(gameId)) {
       throw createHttpError(400, `An invalid game ID was provided: ${gameId}`);

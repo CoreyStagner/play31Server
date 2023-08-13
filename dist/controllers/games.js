@@ -30,12 +30,9 @@ const getGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getGames = getGames;
 const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('here');
     const { gameId } = req.params;
-    console.log("Game ID:", gameId);
     // const authenticatedUser = req.session.userId;
     try {
-        console.log('there');
         // assertIsDefined(authenticatedUser);
         if (!mongoose_1.default.isValidObjectId(gameId)) {
             throw (0, http_errors_1.default)(400, `An invalid game ID was provided: ${gameId}`);
